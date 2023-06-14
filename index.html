@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+    <title>B.S. RS</title>
+    <style>
+      body { margin: 0px; }
+      canvas {
+        border: 0px none;
+        background-color: black;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: -webkit-crisp-edges;
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+      }
+    </style>
+  </head>
+
+
+  <body>
+  <canvas id="canvas" height="150" width="150"></canvas>
+  <script type="module">
+	  import init, { start, greet, AppStuff, rock, gwah } from './pkg/birdstrikers.js';
+	  async function run() {
+		  await init();
+		  start();
+		  
+		  var as = rock();
+		  
+		  console.log(as);
+		  gwah(as);
+	  }
+	  run();
+  </script>
+
+  <script>
+    var canvas = document.getElementById('canvas');
+    var resizeCanvas = function() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.onresize = resizeCanvas;
+    resizeCanvas();
+  </script>
+  </body>
+</html>

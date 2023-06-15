@@ -1,7 +1,6 @@
 use birdstrikers::links::*;
 use birdstrikers::links::stupidlgrn::*;
 
-use logos::Logos;
 
 #[cfg(test)]
 mod tests {
@@ -27,23 +26,43 @@ mod tests {
     #[test]
     fn test_dsl() {
         let dslin = "
-*foo:  NUM      30
-*bar:  PNT      (2, 2)
-*qux:  STR      \"hi there *screams*\"
-*nand: LFUNC0   nand
+            *foo:   NUM      30
+            *bar:   NUM
+            *rock:  POINT      (2, 2)
+            #*qux:   STRINT      \"hi there *screams*\"
+            #*nand: LOGICFUNC   nand
+            
+            # comment
+            *gate0: Center +NUM0:bar +NUM1:foo
+            
+            *gate1: Highlight +NUM2:bar +NUM32:bar
+            
+            #    + NUM0:name   # another comment
+            #    + POINT0:foo +POINT0:h
+            
+            #*gate0 +n0:23";
+            
+        let dslin = "
+            
+            *panel_tl: POINT (10, 10)
+            *panel_br: POINT (40, 40)
+            
+            *shape_tl: POINT (0, 0)
+            *shape_br: POINT (10, 10)
+            
+            *btn_tl: POINT (0, 0)
+            *btn_br: POINT (10, 10)
 
-# comment
-*gate0: LogicGate  + LFUNC0:NAND
-    + n0:qux
-    + port:name   # another comment
-    + PNT0:foo +PNT1:h
+            *gate0: Center +POINT0:panel_tl +POINT1:panel_br +POINT2:shape_tl +POINT3:shape_br  +POINT4:btn_tl  +POINT5:btn_br
+            
+            ";
 
-*gate0 +n0:23";
+        assert_eq!(dsl::parse_numbered_port("NUM23"), Some((SpaghettiLinkType::F64, 23 as PortId)));
+        assert_eq!(dsl::parse_numbered_port("POINT1"), Some((SpaghettiLinkType::Point, 1 as PortId)));
         
-        let mut lex = dsl::Token::lexer(dslin);
-        
-        while let Some(tkn) = lex.next() {
-            println!("{}    >>> {:?}", lex.slice(), tkn);
+        match dsl::make_spaghetti(dslin) {
+            Err(uwu) => println!("{}", dsl::make_err_msg(dslin, uwu.0, &uwu.1)),
+            Ok(linkapp) => println!("cool: ")
         }
         
         

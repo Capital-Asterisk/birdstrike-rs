@@ -2,7 +2,14 @@
 
 ## components
 
-tabiplexer/encoder
+0: highlight
+1: center
+
+2: text
+3: button
+4: radio selector
+
+
 
 ## link types
 

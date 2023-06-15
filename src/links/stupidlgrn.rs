@@ -18,7 +18,6 @@ pub struct BitIt<'a> {
 }
 
 impl<'a> BitIt<'a> {
-
     fn next_block_uwu(&mut self) {
         if self.block != 0 {
             return;
@@ -36,6 +35,9 @@ impl<'a> Iterator for BitIt<'a> {
     type Item = usize;
     
     fn next(&mut self) -> Option<Self::Item> {
+    
+        // thanks europe for help writing this function
+        
         if self.block == 0 {
             return None
         }
